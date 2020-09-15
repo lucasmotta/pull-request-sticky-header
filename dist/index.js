@@ -4233,9 +4233,9 @@ exports.MARKER = '<!-- Sticky Header Marker -->';
 function addHeader(header, currentBody) {
     const regex = new RegExp(`(.*)(${exports.MARKER})\\s*`);
     if (currentBody.match(regex)) {
-        return currentBody.replace(regex, `${header}${exports.MARKER}\n`);
+        return currentBody.replace(regex, `${header}${exports.MARKER}\n\n`);
     }
-    return `${header}${exports.MARKER}\n${currentBody}`;
+    return `${header}${exports.MARKER}\n\n${currentBody}`;
 }
 exports.addHeader = addHeader;
 

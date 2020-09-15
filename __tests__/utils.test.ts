@@ -6,16 +6,18 @@ test('add a header to body without an existing marker', async () => {
 
   const newBody = addHeader(header, currentBody)
 
-  expect(newBody).toEqual(`> This is a sticky header${MARKER}\n${currentBody}`)
+  expect(newBody).toEqual(
+    `> This is a sticky header${MARKER}\n\n${currentBody}`
+  )
 })
 
 test('add a header to body with an existing marker', async () => {
-  const currentBody = `> This is the old header${MARKER}\nHello world, this is a description`
+  const currentBody = `> This is the old header${MARKER}\n\nHello world, this is a description`
   const header = '> This is a new sticky header'
 
   const newBody = addHeader(header, currentBody)
 
   expect(newBody).toEqual(
-    `${header}${MARKER}\nHello world, this is a description`
+    `${header}${MARKER}\n\nHello world, this is a description`
   )
 })
