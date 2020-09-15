@@ -1,5 +1,5 @@
 {
-  "name": "typescript-action",
+  "name": "pull-request-sticky-header",
   "version": "0.0.0",
   "private": true,
   "description": "TypeScript template action",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/lucasmotta/pull-request-sticky-header.git"
   },
   "keywords": [
     "actions",
@@ -25,7 +25,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.4"
+    "@actions/core": "^1.2.4",
+    "@actions/github": "^4.0.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.5",

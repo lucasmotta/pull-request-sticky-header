@@ -1,11 +1,17 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Pull Request Sticky Header'
+description: 'Keep a custom message on the top of your PR description'
+author: 'lucasmotta'
 inputs:
-  milliseconds: # change this
+  header:
+    description: 'Markdown message you want to stick at the top of your PR'
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+  destination_branch:
+    description: 'Base branch of the PR. Default is master'
+    default: 'master'
+    required: false
+  GITHUB_TOKEN:
+    description: 'set secrets.GITHUB_TOKEN here'
+    required: true
 runs:
   using: 'node12'
   main: 'dist/index.js'

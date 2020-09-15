@@ -1,0 +1,15 @@
+name: 'example'
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  example:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+        with:
+          header: '> 🚀 This message is automated and the run number is: **${{ github.run_number }}**'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
