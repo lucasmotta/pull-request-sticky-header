@@ -560,33 +560,25 @@ const core = __importStar(__webpack_require__(470));
 const github = __importStar(__webpack_require__(469));
 const utils_1 = __webpack_require__(611);
 function run() {
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
-        const githubToken = core.getInput('github_token', { required: true });
-        const header = core.getInput('header', { required: true });
-        const base = core.getInput('destination_branch') || 'master';
-        const octokit = github.getOctokit(githubToken);
-        const source = github.context.ref.replace(/^refs\/heads\//, '');
-        core.info(`Look up a pull request with source=${source} base=${base}`);
-        const { data: pulls } = yield octokit.pulls.list({
-            owner: github.context.repo.owner,
-            repo: github.context.repo.repo,
-            base,
-            head: `${github.context.repo.owner}:${source}`,
-        });
-        if (pulls.length === 0) {
-            core.info(`No such pull request: source=${source} base=${base}`);
+        const pullNumber = ((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number) || 0;
+        if (isNaN(pullNumber) || pullNumber < 1) {
+            core.info('Not a pull request, skipping it...');
             return;
         }
-        const currentPr = pulls[0];
-        core.info(`Found pull request #${currentPr.number}`);
-        const params = {
-            owner: github.context.repo.owner,
-            repo: github.context.repo.repo,
-            pull_number: currentPr.number,
-            body: utils_1.addHeader(header, currentPr.body),
-        };
-        core.info(`Updating with new header: ${header}`);
-        yield octokit.pulls.update(params);
+        try {
+            const githubToken = core.getInput('github_token', { required: true });
+            const header = core.getInput('header', { required: true });
+            const octokit = github.getOctokit(githubToken);
+            const repo = github.context.repo;
+            const pullRequest = yield octokit.pulls.get(Object.assign(Object.assign({}, repo), { pull_number: pullNumber }));
+            const params = Object.assign(Object.assign({}, github.context.repo), { pull_number: pullNumber, body: utils_1.addHeader(header, (_b = pullRequest === null || pullRequest === void 0 ? void 0 : pullRequest.data) === null || _b === void 0 ? void 0 : _b.body) });
+            yield octokit.pulls.update(params);
+        }
+        catch ({ message }) {
+            core.setFailed(message);
+        }
     });
 }
 run();
