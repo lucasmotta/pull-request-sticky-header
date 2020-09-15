@@ -555,29 +555,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(__webpack_require__(470));
-const github_1 = __importDefault(__webpack_require__(469));
+const github = __importStar(__webpack_require__(469));
 const utils_1 = __webpack_require__(611);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
-        const inputs = {
-            githubToken: core.getInput('github_token', { required: true }),
-            header: core.getInput('header', { required: true }),
-            destinationBranch: core.getInput('destination_branch') || 'master',
-        };
-        const octokit = github_1.default.getOctokit(inputs.githubToken);
-        const base = inputs.destinationBranch;
-        const source = github_1.default.context.ref.replace(/^refs\/heads\//, '');
+        const githubToken = core.getInput('github_token', { required: true });
+        const header = core.getInput('header', { required: true });
+        const base = core.getInput('destination_branch') || 'master';
+        const octokit = github.getOctokit(githubToken);
+        const source = github.context.ref.replace(/^refs\/heads\//, '');
         core.info(`Look up a pull request with source=${source} base=${base}`);
         const { data: pulls } = yield octokit.pulls.list({
-            owner: github_1.default.context.repo.owner,
-            repo: github_1.default.context.repo.repo,
+            owner: github.context.repo.owner,
+            repo: github.context.repo.repo,
             base,
-            head: `${github_1.default.context.repo.owner}:${source}`,
+            head: `${github.context.repo.owner}:${source}`,
         });
         if (pulls.length === 0) {
             core.info(`No such pull request: source=${source} base=${base}`);
@@ -586,12 +580,12 @@ function run() {
         const currentPr = pulls[0];
         core.info(`Found pull request #${currentPr.number}`);
         const params = {
-            owner: github_1.default.context.repo.owner,
-            repo: github_1.default.context.repo.repo,
+            owner: github.context.repo.owner,
+            repo: github.context.repo.repo,
             pull_number: currentPr.number,
-            body: utils_1.addHeader(inputs.header, currentPr.body),
+            body: utils_1.addHeader(header, currentPr.body),
         };
-        core.info(`Updating with new header: ${inputs.header}`);
+        core.info(`Updating with new header: ${header}`);
         yield octokit.pulls.update(params);
     });
 }
