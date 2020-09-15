@@ -7,7 +7,7 @@
 
 > Keep a custom message on the top of your PR description
 
-This Action is heavily inspired by [sticky-pull-request-comment](https://github.com/marocchino/sticky-pull-request-comment), but instead of having a separated comment, I wanted to update the PR's description isntead.
+This Action is heavily inspired by [sticky-pull-request-comment](https://github.com/marocchino/sticky-pull-request-comment), but instead of having a separated comment, I wanted to update the PR's description instead.
 
 ```yml
 name: PRSH example
