@@ -1,9 +1,12 @@
 export const MARKER = '<!-- Sticky Header Marker -->'
 
-export function addHeader(header: string, currentBody: string): string {
-  const regex = new RegExp(`(.*)(${MARKER})\\s*`)
+export function addHeader(header: string, currentBody: string | null | undefined): string {
+  if(!currentBody){
+    return header
+  }
 
-  if (currentBody.match(regex)) {
+  const regex = new RegExp(`(.*)(${MARKER})\\s*`)
+  if (currentBody?.match(regex)) {
     return currentBody.replace(regex, `${header}${MARKER}\n\n`)
   }
 
