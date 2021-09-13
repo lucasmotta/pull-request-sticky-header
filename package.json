@@ -1,5 +1,5 @@
 {
-  "name": "pull-request-sticky-header",
+  "name": "pull-request-fixed-header",
   "version": "1.0.1",
   "private": true,
   "description": "TypeScript template action",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lucasmotta/pull-request-sticky-header.git"
+    "url": "git+https://github.com/kyranjamie/pull-request-fixed-header.git"
   },
   "keywords": [
     "actions",
