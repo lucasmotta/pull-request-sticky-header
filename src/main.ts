@@ -21,15 +21,19 @@ async function run(): Promise<void> {
       pull_number: pullNumber,
     })
 
+    console.log(pullRequest)
+
+    core.debug(JSON.stringify(pullRequest))
+
     const params = {
       ...github.context.repo,
       pull_number: pullNumber,
-      body: addHeader(header, pullRequest?.data?.body),
+      body: addHeader(header, pullRequest?.data?.body || ''),
     }
 
     await octokit.pulls.update(params)
   } catch ({ message }) {
-    core.setFailed(message)
+    if (typeof message === 'string') core.setFailed(message)
   }
 }
 

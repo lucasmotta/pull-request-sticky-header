@@ -1,6 +1,6 @@
-name: 'Pull Request Sticky Header'
+name: 'Pull Request Fixed Header'
 description: 'Keep a custom message on the top of your PR description'
-author: 'lucasmotta'
+author: 'kyranjamie'
 inputs:
   header:
     description: 'Markdown message you want to stick at the top of your PR'
